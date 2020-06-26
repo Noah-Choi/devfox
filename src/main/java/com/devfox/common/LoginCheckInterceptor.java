@@ -16,7 +16,6 @@ public class LoginCheckInterceptor extends HandlerInterceptorAdapter
 	{
         HttpSession session = request.getSession();
         MemberVO memberVO = (MemberVO)session.getAttribute("login");
-
         if(memberVO == null)
         {
             response.sendRedirect("/board/list");

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -18,7 +17,18 @@
  
 </head>
 <body>
- 
+	
+	<div width="80%" align="center">
+   	<c:choose>
+	    <c:when test="${empty login}">
+	        <input type="button" value="로그인" onclick="location.href='../login';">
+	    </c:when>	 
+	    <c:otherwise>
+	        <input type="button" value="로그아웃" onclick="location.href='../logout';">
+	    </c:otherwise>
+	</c:choose>
+   			
+	</div>
 	
     <table class="table table-board" border="1px" width="80%" align="center">
     <tr>
@@ -33,7 +43,9 @@
 	    		<input type="text" name="search_keyword">
 	    		<input type="submit" value="검색">
 	    		
-	    		<input type="button" value="글 작성" onclick="location.href='create';">
+	    		<c:if test="${not empty login}">
+	    			<input type="button" value="글 작성" onclick="location.href='create';">
+	    		</c:if>	
     		</form>
    		</td>
     </tr>

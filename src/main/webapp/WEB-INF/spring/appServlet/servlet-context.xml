@@ -35,6 +35,7 @@
     <interceptors>
         <interceptor>
             <mapping path="/board/create"/>
+            <mapping path="/board/updateForm"/>
             <mapping path="/board/update"/>
             <mapping path="/board/delete"/>
             <beans:ref bean="LoginCheckInterceptor"/>

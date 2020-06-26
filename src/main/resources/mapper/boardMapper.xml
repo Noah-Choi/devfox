@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
     <!-- 掲示板追加 -->
     <insert id="insertBoard">
-        insert into board(title, m_id, content, date) values(#{title}, #{m_id}, #{detail}, SYSDATE())
+        insert into board(title, m_id, content, date) values(#{title}, #{m_id}, #{content}, SYSDATE())
     </insert>
     
     <!-- 掲示板リスト表示 -->
