@@ -22,7 +22,23 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.devfox.web" />
+	<context:component-scan base-package="com.devfox.dao" />
+    <context:component-scan base-package="com.devfox.service" />
+    <context:component-scan base-package="com.devfox.controller" />
+    <context:component-scan base-package="com.devfox.domain" />
+
 	
-	
+	<!-- Interceptor Object生成 -->
+    <beans:bean id="LoginCheckInterceptor" class="com.devfox.common.LoginCheckInterceptor" />
+    
+    <!-- Interceptor設定 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/board/create"/>
+            <mapping path="/board/update"/>
+            <mapping path="/board/delete"/>
+            <beans:ref bean="LoginCheckInterceptor"/>
+        </interceptor>
+    </interceptors>
 	
 </beans:beans>
