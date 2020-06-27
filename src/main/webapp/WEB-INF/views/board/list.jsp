@@ -18,7 +18,7 @@
 </head>
 <body>
 	
-	<div width="80%" align="center">
+	<div align="center">
    	<c:choose>
 	    <c:when test="${empty login}">
 	        <input type="button" value="로그인" onclick="location.href='../login';">
@@ -68,5 +68,48 @@
         </tr>
     </c:forEach>
     </table>
+    
+    <c:set var="start" />
+    <c:set var="count" value="${paging.blockSize}" />
+    <c:choose>
+	    <c:when test="${paging.curPage - paging.blockSize / 2 <= paging.startPage}">
+	    	<c:set var="start" value="${paging.startPage}" />
+	    	<c:if test="${paging.endPage < paging.blockSize}">
+	    		<c:set var="count" value="${paging.endPage}" />
+	    	</c:if>
+	    </c:when>
+	    <c:when test="${paging.endPage <= paging.curPage + (paging.blockSize - 1) / 2}">
+			<c:set var="start" value="${paging.endPage - paging.blockSize + 1}" />
+			<c:if test="${paging.endPage < paging.blockSize}">
+				<c:set var="start" value="${paging.startPage}" />
+				<c:set var="count" value="${paging.endPage}" />
+			</c:if>    	
+	    </c:when>
+	    <c:otherwise>
+	    	<c:set var="start" value="${paging.curPage - paging.blockSize / 2}" />
+	    </c:otherwise>
+	</c:choose>
+	
+	<div align="center" style="margin-top:10px">
+		<c:if test="${paging.blockSize < paging.endPage && paging.startPage < paging.curPage - paging.blockSize / 2}">
+			<a href="/board/list?page=${paging.startPage}&type=${paging.type}&keyword=${paging.keyword}" style="text-decoration:none; color:gray">&lt;</a>&nbsp;
+		</c:if>
+	
+		<c:forEach var="i" begin="${start}" end="${start + count - 1}">
+			<c:choose>
+				<c:when test="${i == paging.curPage}">
+					<a href="" style="text-decoration:none; color:black">${i}</a>&nbsp;
+				</c:when>
+				<c:otherwise>
+					<a href="/board/list?page=${i}&type=${paging.type}&keyword=${paging.keyword}" style="text-decoration:none; color:gray">${i}</a>&nbsp;
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		
+		<c:if test="${paging.blockSize < paging.endPage && paging.curPage + (paging.blockSize - 1) / 2 < paging.endPage}">
+			<a href="/board/list?page=${paging.endPage}&type=${paging.type}&keyword=${paging.keyword}" style="text-decoration:none; color:gray">&gt;</a>&nbsp;
+		</c:if>
+	</div>
+	
 </body>
 </html>

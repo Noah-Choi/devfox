@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
+import com.devfox.domain.PagingVO;
  
 @Repository
-public class BoardDAOImp implements BoardDAO 
+public class BoardDAOImpl implements BoardDAO 
 {
     
     @Inject
@@ -25,18 +26,11 @@ public class BoardDAOImp implements BoardDAO
         sqlSession.insert(namespace+".insertBoard", vo);
     }
     
-    //掲示板リスト表示
-    @Override
-    public List<BoardVO> listAll() throws Exception 
-    {
-    	return sqlSession.selectList(namespace+".listAllBoard");
-    }
-    
     //掲示板検索リスト表示 
     @Override
-    public List<BoardVO> listSearch(BoardSearchVO vo) throws Exception
+    public List<BoardVO> list(BoardSearchVO vo) throws Exception
     {
-    	return sqlSession.selectList(namespace+".listSearchBoard", vo); 
+    	return sqlSession.selectList(namespace+".listBoard", vo); 
     }
     
     //掲示板細かい表示 
@@ -64,5 +58,11 @@ public class BoardDAOImp implements BoardDAO
 	public void updateViewCnt(Integer num) throws Exception 
 	{
 		sqlSession.update(namespace+".updateBoardViewCnt", num);
+	}
+	
+	@Override
+	public int selectCount(BoardSearchVO vo) throws Exception
+	{
+		return sqlSession.selectOne(namespace+".selectViewCnt", vo);
 	}
 }

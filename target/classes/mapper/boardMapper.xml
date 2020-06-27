@@ -13,25 +13,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <!-- 掲示板リスト表示 -->
-    <select id="listAllBoard" resultType="com.devfox.domain.BoardVO">
-        select * from board order by num DESC
-    </select>
-    
-    <!-- 掲示板検索リスト表示 -->
-    <select id="listSearchBoard" resultType="com.devfox.domain.BoardVO">
-        select * from board where
+    <select id="listBoard" resultType="com.devfox.domain.BoardVO">
+        select * from board
         
-        <if test="type.equals('title')">
-	     	title like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="type.equals('content')">
-			content like CONCAT('%', #{keyword}, '%')
-		</if>
-		<if test="type.equals('m_id')">
-			m_id like CONCAT('%', #{keyword}, '%')
-		</if>
-         
-        order by num DESC
+        <if test="type != null">
+			<if test="type.equals('title')">
+		     	where title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type.equals('content')">
+				where content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type.equals('m_id')">
+				where m_id like CONCAT('%', #{keyword}, '%')
+			</if>        
+        </if>
+
+        order by num DESC limit #{startPoint}, #{pageSize}
+        
     </select>
     
     <!-- 掲示板細かい表示 -->
@@ -53,5 +51,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateBoardViewCnt">
         update board set count = count + 1 where num = #{num}
     </update>
+    
+    <!-- 掲示物数表示 -->
+    <select id="selectViewCnt" resultType="int">
+        select count(*) from board
+        
+        <if test="type != null">
+        	<if test="type.equals('title')">
+		     	where title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type.equals('content')">
+				where content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="type.equals('m_id')">
+				where m_id like CONCAT('%', #{keyword}, '%')
+			</if>
+        </if>
+		
+    </select>
  
 </mapper>

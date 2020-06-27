@@ -41,7 +41,7 @@
 			<input type="button" value="수정" onclick="location.href='updateForm?num=${boardVO.num}'">
 			<input type="button" value="삭제" onclick="del(${boardVO.num})">
 		</c:if>
-		<input type="button" value="글 목록" onclick="location.href='list';">
+		<input type="button" value="글 목록" onclick="history.back();">
 	</div>
         
 </body>

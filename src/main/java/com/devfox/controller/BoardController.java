@@ -3,12 +3,12 @@ package com.devfox.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
 import com.devfox.domain.MemberVO;
+import com.devfox.domain.PagingVO;
 import com.devfox.service.BoardService;
 import com.mysql.cj.util.StringUtils;
  
@@ -27,8 +28,15 @@ import com.mysql.cj.util.StringUtils;
 @RequestMapping("/board/") //url要請が/borad/で始めるのはここで処理する. ex) board/abc , board/123 board/create
 public class BoardController 
 {
-    @Inject
     private BoardService service;
+    private PagingVO paging;
+    
+    @Autowired
+    public BoardController(BoardService service, PagingVO paging)
+    {
+    	this.service = service;
+    	this.paging = paging;
+    }
     
     @RequestMapping(value="/create",method=RequestMethod.GET)
     public void createGET(BoardVO board, Model model) throws Exception
@@ -52,18 +60,26 @@ public class BoardController
     }
     
     @RequestMapping(value = "/list", method=RequestMethod.GET)
-    public void list(BoardSearchVO search, Model model) throws Exception
+    public void list(@RequestParam(value="page", defaultValue="1") int page, BoardSearchVO search, Model model) throws Exception
     {
-    	if(search.getKeyword() != null && search.getKeyword() != "")
-    	{
-    		System.out.println("검색목록 페이지");
-    		model.addAttribute("boardList", service.listSearch(search));
-    	}
-    	else
-    	{
-    		System.out.println("전체목록 페이지");
-    		model.addAttribute("boardList", service.listAll());
-    	}
+    	System.out.println("게시판 리스트 page : " + page);
+    	
+    	paging.setTotalPostCnt(service.selectCount(search));
+    	paging.setCurPage(page);
+    	
+    	int startPoint = (page - 1) * paging.getPageSize();
+    	paging.setStartPoint(startPoint);
+    	
+    	int endPage = paging.getTotalPostCnt() / paging.getPageSize();
+    	int nmg = paging.getTotalPostCnt() % paging.getPageSize();
+    	if(0 < nmg) 
+    		endPage++;
+    	
+    	paging.setEndPage(endPage);
+    	search.setPaging(paging);
+    	
+    	model.addAttribute("boardList", service.list(search));
+    	model.addAttribute("paging", search);
     }
     
     @RequestMapping(value = "/detail", method=RequestMethod.GET)
@@ -133,7 +149,9 @@ public class BoardController
         
         HttpSession session = request.getSession();
         MemberVO memberVO = (MemberVO)session.getAttribute("login");
-        if(memberVO.getId().equals(board.getM_id()))
+        BoardVO boardVO = service.read(board.getNum());
+        
+        if(memberVO.getId().equals(boardVO.getM_id()))
         {
         	service.update(board);
         	rttr.addFlashAttribute("msg", "수정하였습니다.");

@@ -1,17 +1,18 @@
 package com.devfox.service;
  
 import java.util.List;
- 
+
 import javax.inject.Inject;
- 
+
+import org.springframework.stereotype.Service;
+
 import com.devfox.dao.BoardDAO;
 import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
-
-import org.springframework.stereotype.Service;
+import com.devfox.domain.PagingVO;
  
 @Service
-public class BoardServiceImp implements BoardService 
+public class BoardServiceImpl implements BoardService 
 {
     @Inject
     private BoardDAO dao;
@@ -23,15 +24,9 @@ public class BoardServiceImp implements BoardService
     }
  
     @Override
-    public List<BoardVO> listAll() throws Exception 
+    public List<BoardVO> list(BoardSearchVO vo) throws Exception
     {
-        return dao.listAll();
-    }
- 
-    @Override
-    public List<BoardVO> listSearch(BoardSearchVO vo) throws Exception
-    {
-    	return dao.listSearch(vo);
+    	return dao.list(vo);
     }
     
     @Override
@@ -56,6 +51,12 @@ public class BoardServiceImp implements BoardService
 	public void updateViewCnt(Integer num) throws Exception 
 	{
 		dao.updateViewCnt(num);
+	}
+	
+	@Override
+	public int selectCount(BoardSearchVO vo) throws Exception
+	{
+		return dao.selectCount(vo);
 	}
  
 }
