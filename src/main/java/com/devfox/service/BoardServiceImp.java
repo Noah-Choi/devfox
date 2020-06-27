@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
  
 import com.devfox.dao.BoardDAO;
+import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
 
 import org.springframework.stereotype.Service;
@@ -22,11 +23,17 @@ public class BoardServiceImp implements BoardService
     }
  
     @Override
-    public List<BoardVO> list() throws Exception 
+    public List<BoardVO> listAll() throws Exception 
     {
-        return dao.list();
+        return dao.listAll();
     }
  
+    @Override
+    public List<BoardVO> listSearch(BoardSearchVO vo) throws Exception
+    {
+    	return dao.listSearch(vo);
+    }
+    
     @Override
     public BoardVO read(Integer num) throws Exception 
     {

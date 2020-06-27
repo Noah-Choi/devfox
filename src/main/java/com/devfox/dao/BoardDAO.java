@@ -2,13 +2,16 @@ package com.devfox.dao;
 
 import java.util.List;
 
+import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
 
 public interface BoardDAO {
 
 	public void create(BoardVO vo) throws Exception;
 
-	public List<BoardVO> list() throws Exception;
+	public List<BoardVO> listAll() throws Exception;
+	
+	public List<BoardVO> listSearch(BoardSearchVO vo) throws Exception; 
 	
 	public BoardVO read(Integer num) throws Exception;
 	

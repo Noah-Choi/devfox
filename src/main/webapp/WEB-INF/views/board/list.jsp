@@ -33,14 +33,14 @@
     <table class="table table-board" border="1px" width="80%" align="center">
     <tr>
    		<td colspan="5" align="right">
-   			<form action="/board/search" method="GET">
-	    		<select name="search_type">
+   			<form action="/board/list" method="GET">
+	    		<select name="type">
 	    			<option value="title">제목</option>
 	    			<option value="content">내용</option>
-	    			<option value="id">작성자</option> 
+	    			<option value="m_id">작성자</option> 
 	    		</select>
 	    		
-	    		<input type="text" name="search_keyword">
+	    		<input type="text" name="keyword">
 	    		<input type="submit" value="검색">
 	    		
 	    		<c:if test="${not empty login}">

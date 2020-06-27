@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
 import com.devfox.domain.MemberVO;
 import com.devfox.service.BoardService;
@@ -51,11 +52,18 @@ public class BoardController
     }
     
     @RequestMapping(value = "/list", method=RequestMethod.GET)
-    public void list(Model model) throws Exception
+    public void list(BoardSearchVO search, Model model) throws Exception
     {
-        System.out.println("전체목록 페이지");
-        
-        model.addAttribute("boardList", service.list());    		
+    	if(search.getKeyword() != null && search.getKeyword() != "")
+    	{
+    		System.out.println("검색목록 페이지");
+    		model.addAttribute("boardList", service.listSearch(search));
+    	}
+    	else
+    	{
+    		System.out.println("전체목록 페이지");
+    		model.addAttribute("boardList", service.listAll());
+    	}
     }
     
     @RequestMapping(value = "/detail", method=RequestMethod.GET)

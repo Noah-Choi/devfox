@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.devfox.domain.BoardSearchVO;
 import com.devfox.domain.BoardVO;
  
 @Repository
@@ -26,9 +27,16 @@ public class BoardDAOImp implements BoardDAO
     
     //掲示板リスト表示
     @Override
-    public List<BoardVO> list() throws Exception 
+    public List<BoardVO> listAll() throws Exception 
     {
-    	return sqlSession.selectList(namespace+".listBoard");
+    	return sqlSession.selectList(namespace+".listAllBoard");
+    }
+    
+    //掲示板検索リスト表示 
+    @Override
+    public List<BoardVO> listSearch(BoardSearchVO vo) throws Exception
+    {
+    	return sqlSession.selectList(namespace+".listSearchBoard", vo); 
     }
     
     //掲示板細かい表示 

@@ -13,8 +13,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     
     <!-- 掲示板リスト表示 -->
-    <select id="listBoard" resultType="com.devfox.domain.BoardVO">
+    <select id="listAllBoard" resultType="com.devfox.domain.BoardVO">
         select * from board order by num DESC
+    </select>
+    
+    <!-- 掲示板検索リスト表示 -->
+    <select id="listSearchBoard" resultType="com.devfox.domain.BoardVO">
+        select * from board where
+        
+        <if test="type.equals('title')">
+	     	title like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="type.equals('content')">
+			content like CONCAT('%', #{keyword}, '%')
+		</if>
+		<if test="type.equals('m_id')">
+			m_id like CONCAT('%', #{keyword}, '%')
+		</if>
+         
+        order by num DESC
     </select>
     
     <!-- 掲示板細かい表示 -->
