@@ -31,5 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateBoard">
         update board set title=#{title} ,content = #{content} where num = #{num}
     </update>
+    
+    <!-- 掲示板の照会数増加-->
+    <update id="updateBoardViewCnt">
+        update board set count = count + 1 where num = #{num}
+    </update>
  
 </mapper>

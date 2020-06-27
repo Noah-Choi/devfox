@@ -6,6 +6,7 @@ import javax.inject.Inject;
  
 import com.devfox.dao.BoardDAO;
 import com.devfox.domain.BoardVO;
+
 import org.springframework.stereotype.Service;
  
 @Service
@@ -43,5 +44,11 @@ public class BoardServiceImp implements BoardService
     {
         dao.update(vo);
     }
+
+	@Override
+	public void updateViewCnt(Integer num) throws Exception 
+	{
+		dao.updateViewCnt(num);
+	}
  
 }

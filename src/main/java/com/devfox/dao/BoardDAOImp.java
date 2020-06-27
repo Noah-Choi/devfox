@@ -1,12 +1,13 @@
 package com.devfox.dao;
  
 import java.util.List;
- 
+
 import javax.inject.Inject;
- 
+
 import org.apache.ibatis.session.SqlSession;
-import com.devfox.domain.BoardVO;
 import org.springframework.stereotype.Repository;
+
+import com.devfox.domain.BoardVO;
  
 @Repository
 public class BoardDAOImp implements BoardDAO 
@@ -50,4 +51,10 @@ public class BoardDAOImp implements BoardDAO
     {
         sqlSession.update(namespace+".updateBoard", vo);
     }
+
+	@Override
+	public void updateViewCnt(Integer num) throws Exception 
+	{
+		sqlSession.update(namespace+".updateBoardViewCnt", num);
+	}
 }

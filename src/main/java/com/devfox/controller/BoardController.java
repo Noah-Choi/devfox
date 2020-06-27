@@ -1,7 +1,12 @@
 package com.devfox.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -9,11 +14,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.devfox.domain.BoardVO;
 import com.devfox.domain.MemberVO;
 import com.devfox.service.BoardService;
+import com.mysql.cj.util.StringUtils;
  
 @Controller
 @RequestMapping("/board/") //url要請が/borad/で始めるのはここで処理する. ex) board/abc , board/123 board/create
@@ -52,12 +59,45 @@ public class BoardController
     }
     
     @RequestMapping(value = "/detail", method=RequestMethod.GET)
-    public void detail(@RequestParam("num") int num, Model model) throws Exception
+    public ModelAndView detail(@RequestParam("num") int num, HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         System.out.println("글 번호 " + num + "번의 상세내용 페이지");
+                
+        // 保存されたCookie読み込み
+        Map mapCookie = new HashMap();
+        if(request.getCookies() != null)
+        {
+        	Cookie cookies[] = request.getCookies();
+        	for(int i = 0; i < cookies.length; i++) 
+        	{
+        		Cookie obj = cookies[i]; 
+        		mapCookie.put(obj.getName(), obj.getValue()); 
+        	}
+        }
         
-        model.addAttribute(service.read(num));
-        //service.updateViewCnt(num);
+        String cookieReadView = (String) mapCookie.get("readView"); 
+        
+        // 新しいCookie生成 
+        String newCookieReadView = "|" + num + "|";
+        
+        //保存されたCookieの中で新しいCookie値と同じ値があるか検索
+        if(StringUtils.indexOfIgnoreCase(cookieReadView, newCookieReadView) == -1) 
+        {
+        	//なければCookie生成
+        	Cookie cookie = new Cookie("readView", cookieReadView + newCookieReadView);
+        	response.addCookie(cookie);
+        	
+        	System.out.println("글 번호 " + num + "조회수 증가");
+        	
+        	//照会数増加
+        	service.updateViewCnt(num);
+        }
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("/board/detail"); 
+        mv.addObject("boardVO", service.read(num));
+
+        return mv;
     }
     
     @RequestMapping(value = "/updateForm", method=RequestMethod.GET)
