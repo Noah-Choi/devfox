@@ -86,11 +86,13 @@
 			</c:if>    	
 	    </c:when>
 	    <c:otherwise>
-	    	<c:set var="start" value="${paging.curPage - paging.blockSize / 2}" />
+	    	<c:set var="start" value="${paging.curPage - (paging.blockSize / 2 - paging.blockSize / 2 % 1)}" />
 	    </c:otherwise>
 	</c:choose>
 	
 	<div align="center" style="margin-top:10px">
+	
+		<!-- <表示可否 -->
 		<c:if test="${paging.blockSize < paging.endPage && paging.startPage < paging.curPage - paging.blockSize / 2}">
 			<a href="/board/list?page=${paging.startPage}&type=${paging.type}&keyword=${paging.keyword}" style="text-decoration:none; color:gray">&lt;</a>&nbsp;
 		</c:if>
@@ -106,6 +108,7 @@
 			</c:choose>
 		</c:forEach>
 		
+		<!-- >表示可否 -->
 		<c:if test="${paging.blockSize < paging.endPage && paging.curPage + (paging.blockSize - 1) / 2 < paging.endPage}">
 			<a href="/board/list?page=${paging.endPage}&type=${paging.type}&keyword=${paging.keyword}" style="text-decoration:none; color:gray">&gt;</a>&nbsp;
 		</c:if>
