@@ -38,6 +38,9 @@
             <mapping path="/board/updateForm"/>
             <mapping path="/board/update"/>
             <mapping path="/board/delete"/>
+            <mapping path="/board/createComment"/>
+            <mapping path="/board/updateComment"/>
+            <mapping path="/board/deleteComment"/>
             <beans:ref bean="LoginCheckInterceptor"/>
         </interceptor>
     </interceptors>

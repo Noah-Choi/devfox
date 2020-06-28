@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.devfox.domain.MemberVO;
 
 @Repository
-public class MemberImpl implements MemberDAO
+public class MemberDAOImpl implements MemberDAO
 {
 	@Inject
     private SqlSession sqlSession;

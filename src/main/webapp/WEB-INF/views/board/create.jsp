@@ -27,23 +27,26 @@
 <body>
 	<h1>게시판 등록하기 </h1>
     
-    <fieldset style="border:0">
-	    <form action="/board/create" method="POST" onsubmit="return validate();">
-    		<div>
-	            <label for="title">제목</label>
-	            <input type="text" name="title" id="title" style="width:350px" placeholder = "게시판 제목">
-	        </div>
-	        <div style="margin-top:7px">
-	            <label for="content">내용</label>
-	            <textarea rows="12" cols="60" name="content" id="content" placeholder="게시판 내용"></textarea>
-	        </div>
-	        
-	        <div style="width:450px; text-align: center">
-				<button type="submit">작성하기</button>
-				<input type="button" value="글 목록" onclick="location.href='list';">
-	        </div>
-	    </form>
-    </fieldset>
+    <div style="width:800px">
+	    <fieldset style="border:0">
+		    <form action="/board/create" method="POST" onsubmit="return validate();">
+	    		<div>
+		            <label for="title">제목</label>
+		            <input type="text" name="title" id="title" style="width:80%; height:40px; font-size:16" placeholder = "게시판 제목">
+		        </div>
+		        <div style="margin-top:7px">
+		            <label for="content">내용</label>
+		            <textarea rows="25" cols="100" name="content" id="content" style="font-size:14" placeholder="게시판 내용"></textarea>
+		        </div>
+		        
+		        <div style="text-align: center">
+					<button type="submit">작성하기</button>
+					<input type="button" value="글 목록" onclick="location.href='list';">
+		        </div>
+		    </form>
+	    </fieldset>
+    </div>
+    
     
 </body>
 </html>

@@ -2,7 +2,7 @@ package com.devfox.domain;
 
 public class PagingVO 
 {
-	private int totalPostCnt;	//総掲示物数
+	private int totalCnt;		//総結果物数
 	private int startPage;		//最初ページ
 	private int endPage;		//最後ページ
 	private int curPage;		//現在ページ
@@ -10,13 +10,14 @@ public class PagingVO
 	private int blockSize;		//表示するページ数
 	private int startPoint;		//掲示物の始め
 	
-	public int getTotalPostCnt() 
+	
+	public int getTotalCnt() 
 	{
-		return totalPostCnt;
+		return totalCnt;
 	}
-	public void setTotalPostCnt(int totalPostCnt) 
+	public void setTotalCnt(int totalCnt) 
 	{
-		this.totalPostCnt = totalPostCnt;
+		this.totalCnt = totalCnt;
 	}
 	public int getStartPage() 
 	{

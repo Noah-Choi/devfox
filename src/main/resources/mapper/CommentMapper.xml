@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ 
+<mapper namespace="com.devfox.mapper.CommentMapper">
+ 
+    <!-- コメント追加 -->
+    <insert id="insertComment">
+        insert into comment(b_no, m_id, content, date) 
+        values(#{b_no}, #{m_id}, #{content}, SYSDATE())
+    </insert>
+    
+    <!-- コメントリスト照会 -->
+    <select id="listComment" resultType="com.devfox.domain.CommentVO">
+        select * from comment 
+        where b_no = #{num} 
+        order by num DESC 
+        limit #{startPoint}, #{pageSize}
+    </select>
+    
+    <select id="detailComment" resultType="com.devfox.domain.CommentVO">
+        select * from comment where num = #{num}
+    </select>
+    
+    <!-- コメント削除 -->
+    <delete id="deleteComment">
+        delete from comment where num = #{num}
+    </delete>
+    
+    <!-- コメント修正-->
+    <update id="updateComment">
+        update comment set content = #{content} where num = #{num}
+    </update>
+    
+    <!-- コメント数照会-->
+    <select id="selectCommentCnt" resultType="int">
+        select count(*) from comment where b_no = #{b_no}
+    </select>
+ 
+</mapper>

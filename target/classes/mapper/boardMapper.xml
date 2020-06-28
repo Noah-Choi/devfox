@@ -6,13 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  
 <mapper namespace="com.devfox.mapper.BoardMapper">
  
- 
     <!-- 掲示板追加 -->
     <insert id="insertBoard">
         insert into board(title, m_id, content, date) values(#{title}, #{m_id}, #{content}, SYSDATE())
     </insert>
     
-    <!-- 掲示板リスト表示 -->
+    <!-- 掲示板リスト照会-->
     <select id="listBoard" resultType="com.devfox.domain.BoardVO">
         select * from board
         
@@ -32,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         
     </select>
     
-    <!-- 掲示板細かい表示 -->
+    <!-- 掲示板細かい照会 -->
     <select id="detailBoard" resultType="com.devfox.domain.BoardVO">
             select * from board where num = #{num}
     </select>
@@ -52,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update board set count = count + 1 where num = #{num}
     </update>
     
-    <!-- 掲示物数表示 -->
+    <!-- 掲示物数照会 -->
     <select id="selectViewCnt" resultType="int">
         select count(*) from board
         

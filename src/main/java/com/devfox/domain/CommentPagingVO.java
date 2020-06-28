@@ -1,25 +1,20 @@
 package com.devfox.domain;
 
-public class BoardSearchVO extends PagingVO
+public class CommentPagingVO extends PagingVO 
 {
-	private String type;
-	private String keyword;
-	
-	public String getType() 
+	private int num;
+
+	public CommentPagingVO() 
 	{
-		return type;
+		super();
 	}
-	public void setType(String type) 
+	public int getNum() 
 	{
-		this.type = type;
+		return num;
 	}
-	public String getKeyword() 
+	public void setNum(int num) 
 	{
-		return keyword;
-	}
-	public void setKeyword(String keyword) 
-	{
-		this.keyword = keyword;
+		this.num = num;
 	}
 	
 	public void setPaging(PagingVO paging) 
