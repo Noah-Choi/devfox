@@ -41,7 +41,7 @@ public class BoardController
     
     @Autowired
     @Qualifier("commentPaging")
-    private PagingVO commentPaging;
+    private CommentPagingVO commentPaging;
     
     @Autowired
     public BoardController(BoardService service, CommentService commentService)
@@ -60,6 +60,15 @@ public class BoardController
     public String createPOST(BoardVO board, HttpServletRequest request, RedirectAttributes rttr) throws Exception
     {
         System.out.println("/board/create POST方式");
+        
+        
+        //題目とか内容がなければ
+        if(board.getTitle() == null || board.getTitle().replaceAll(" ", "").equals("") || 
+           board.getContent() == null || board.getContent().replaceAll(" ", "").equals(""))
+        {
+        	rttr.addFlashAttribute("msg", "게시글을 입력해주세요.");
+        	return "redirect:/board/create";
+        }
         
         HttpSession session = request.getSession();
         MemberVO memberVO = (MemberVO)session.getAttribute("login");
@@ -141,14 +150,12 @@ public class BoardController
     		endPage++;
     	
     	commentPaging.setEndPage(endPage);
-        CommentPagingVO paging = new CommentPagingVO();
-        paging.setPaging(commentPaging);
-        paging.setNum(num);
+    	commentPaging.setNum(num);
     	
         ModelAndView mv = new ModelAndView();
         mv.setViewName("/board/detail"); 
         mv.addObject("boardVO", service.read(num));
-        mv.addObject("commentList", commentService.list(paging));
+        mv.addObject("commentList", commentService.list(commentPaging));
         mv.addObject("paging", commentPaging);
 
         return mv;
@@ -177,14 +184,21 @@ public class BoardController
     {
         System.out.println("글 번호 " + board.getNum() + "수정");
         
+        //題目とか内容がなければ
+        if(board.getTitle() == null || board.getTitle().replaceAll(" ", "").equals("") || 
+           board.getContent() == null || board.getContent().replaceAll(" ", "").equals(""))
+        {
+        	rttr.addFlashAttribute("msg", "게시글을 입력해주세요.");
+        	return "redirect:/board/updateForm?num=" + board.getNum();
+        }
+        
         HttpSession session = request.getSession();
         MemberVO memberVO = (MemberVO)session.getAttribute("login");
         BoardVO boardVO = service.read(board.getNum());
-        
         if(memberVO.getId().equals(boardVO.getM_id()))
         {
         	service.update(board);
-        	rttr.addFlashAttribute("msg", "댓글을 수정하였습니다.");
+        	rttr.addFlashAttribute("msg", "게시물을 수정하였습니다.");
         }
         else
         {
@@ -222,6 +236,13 @@ public class BoardController
     {
         System.out.println("/board/createComment");
         
+        //コメントがなければ
+        if(comment.getContent() == null || comment.getContent().replaceAll(" ", "").equals(""))
+        {
+        	rttr.addFlashAttribute("msg", "댓글을 입력해 주세요.");
+        	return "redirect:/board/detail?num=" + comment.getB_no();
+        }
+        
         HttpSession session = request.getSession();
         MemberVO memberVO = (MemberVO)session.getAttribute("login");
         comment.setM_id(memberVO.getId());
@@ -236,10 +257,17 @@ public class BoardController
     public String updateComment(CommentVO comment, HttpServletRequest request, RedirectAttributes rttr) throws Exception
     {
         System.out.println("댓글 번호 " + comment.getNum() + "수정");
+
+        //コメントがなければ
+        CommentVO commentVO = commentService.read(comment.getNum());
+        if(comment.getContent() == null || comment.getContent().replaceAll(" ", "").equals(""))
+        {
+        	rttr.addFlashAttribute("msg", "댓글을 입력해 주세요.");
+        	return "redirect:/board/detail?num=" + commentVO.getB_no();
+        }
         
         HttpSession session = request.getSession();
         MemberVO memberVO = (MemberVO)session.getAttribute("login");
-        CommentVO commentVO = commentService.read(comment.getNum());
         if(memberVO.getId().equals(commentVO.getM_id()))
         {
         	commentService.update(comment);

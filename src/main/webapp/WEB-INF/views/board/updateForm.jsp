@@ -9,7 +9,23 @@
 		if(msg != "")
 		{
 			alert(msg);
-			history.back();
+		}
+		
+		function validate() 
+		{
+			if(title.value.trim() == "")
+			{
+				alert("제목을 입력해 주세요.");
+				title.focus();
+				return false;
+			}
+			
+			if(content.value.trim() == "")
+			{
+				alert("내용을 입력해 주세요.");
+				content.focus();
+				return false;
+			}
 		}
 	
 	</script>
@@ -19,15 +35,15 @@
 	<h1>게시판 수정</h1>
 	
 	<div style="width:800px">
-		<form action="/board/update" method="POST">
+		<form action="/board/update" method="POST" onsubmit="return validate();">
 			<input type="hidden" name="num" value='${boardVO.num}'>
 			<div>
 	            <label>제목</label>
-	            <input type="text" name="title" style="width:80%; height:40px; font-size:16" placeholder = "게시판 제목" value='${boardVO.title}'>
+	            <input type="text" name="title" id="title" style="width:80%; height:40px; font-size:16" placeholder = "게시판 제목" value='${boardVO.title}'>
 	        </div>
 	        <div style="margin-top:7px">
 	            <label >내용</label>
-	            <textarea rows="25" cols="100" name="content" style="font-size:14" placeholder="게시판 내용">${boardVO.content}</textarea>
+	            <textarea rows="25" cols="100" name="content" id="content" style="font-size:14" placeholder="게시판 내용">${boardVO.content}</textarea>
 	        </div>
 	        
 	        <div style="text-align: center">

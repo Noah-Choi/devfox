@@ -43,7 +43,7 @@
 		<property name="blockSize" value="10"></property>
 	</bean>
 	
-	<bean id="commentPaging" class="com.devfox.domain.PagingVO">
+	<bean id="commentPaging" class="com.devfox.domain.CommentPagingVO">
 		<qualifier value="commentPaging"/>
 		<property name="startPage" value="1"></property>
 		<property name="pageSize" value="5"></property>

@@ -3,11 +3,15 @@
 <head>
     <title>게시판</title>
     <script type="text/javascript">
+    
+	    var msg ='${msg}';
+	    if(msg != "")
+	    {
+			alert(msg);
+	    }
+    
 		function validate() 
 		{
-			var title = document.getElementById("title");
-			var content = document.getElementById("content");
-	
 			if(title.value.trim() == "")
 			{
 				alert("제목을 입력해 주세요.");
@@ -28,7 +32,6 @@
 	<h1>게시판 등록하기 </h1>
     
     <div style="width:800px">
-	    <fieldset style="border:0">
 		    <form action="/board/create" method="POST" onsubmit="return validate();">
 	    		<div>
 		            <label for="title">제목</label>
@@ -44,7 +47,6 @@
 					<input type="button" value="글 목록" onclick="location.href='list';">
 		        </div>
 		    </form>
-	    </fieldset>
     </div>
     
     

@@ -108,18 +108,20 @@
 		<!-- コメント表示 -->
 		<div style="width:89%; margin-left:37px;">
 			<c:forEach items="${commentList}" var="commentVO">
-				<div id="WriteForm${commentVO.num}" class="commentWriteForm">
-					<form action="/board/updateComment" method="POST">
-						<input type="hidden" name="num" value="${commentVO.num}">
-						<div style="text-align:left; font-size:18; font-weight:bold; margin:7px; margin-left:0px">${commentVO.m_id}</div>
-						<div style="height:80px">
-							<textarea rows="5" cols="80" name="content" id="content">${commentVO.content}</textarea>
-							<input type="button" value="취소" style="width:35pt; height:30pt; position:relative; top:-33px" onclick="cancel(${commentVO.num})">
-							<button type="submit" style="width:35pt; height:30pt; position:relative; top:-33px">수정</button>
-						</div>
-					</form>
-					<hr>
-				</div>
+				<c:if test="${commentVO.m_id eq login.id}">
+					<div id="WriteForm${commentVO.num}" class="commentWriteForm">
+						<form action="/board/updateComment" method="POST">
+							<input type="hidden" name="num" value="${commentVO.num}">
+							<div style="text-align:left; font-size:18; font-weight:bold; margin:7px; margin-left:0px">${commentVO.m_id}</div>
+							<div style="height:80px">
+								<textarea rows="5" cols="80" name="content" id="content">${commentVO.content}</textarea>
+								<input type="button" value="취소" style="width:35pt; height:30pt; position:relative; top:-33px" onclick="cancel(${commentVO.num})">
+								<button type="submit" style="width:35pt; height:30pt; position:relative; top:-33px">수정</button>
+							</div>
+						</form>
+						<hr>
+					</div>
+				</c:if>
 				
 				<div id="view${commentVO.num}" class="commentView">
 					<div style="font-size:18; font-weight:bold; margin-bottom:5px;">${commentVO.m_id}</div>
