@@ -20,6 +20,9 @@ public class CommentServiceImpl implements CommentService
 	@Override
 	public void create(CommentVO vo) throws Exception 
 	{
+		//script防止
+    	String temp = vo.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    	vo.setContent(temp);
 		dao.create(vo);
 	}
 
@@ -44,6 +47,9 @@ public class CommentServiceImpl implements CommentService
 	@Override
 	public void update(CommentVO vo) throws Exception 
 	{
+		//script防止
+    	String temp = vo.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    	vo.setContent(temp);
 		dao.update(vo);
 	}
 

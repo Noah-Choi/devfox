@@ -20,6 +20,9 @@ public class BoardServiceImpl implements BoardService
     @Override
     public void create(BoardVO vo) throws Exception 
     {
+    	//script防止
+    	String temp = vo.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    	vo.setTitle(temp);
         dao.create(vo);
     }
  
@@ -44,6 +47,9 @@ public class BoardServiceImpl implements BoardService
     @Override
     public void update(BoardVO vo) throws Exception 
     {
+    	//script防止
+    	String temp = vo.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    	vo.setTitle(temp);
         dao.update(vo);
     }
 
