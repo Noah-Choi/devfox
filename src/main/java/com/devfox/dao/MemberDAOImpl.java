@@ -15,9 +15,20 @@ public class MemberDAOImpl implements MemberDAO
     private static String namespace = "com.devfox.mapper.MemberMapper";
 
 	@Override
-	public MemberVO login(MemberVO vo) 
+	public MemberVO login(String id) 
 	{
-		return sqlSession.selectOne(namespace + ".login", vo);
+		return sqlSession.selectOne(namespace + ".login", id);
 	}
 
+	@Override
+	public void create(MemberVO vo) 
+	{
+		sqlSession.insert(namespace + ".insertMember", vo);
+	}
+
+	@Override
+	public int selectExistId(String id) 
+	{
+		return sqlSession.selectOne(namespace + ".selectExistId", id);
+	}
 }

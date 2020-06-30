@@ -18,10 +18,11 @@
 </head>
 <body>
 	
-	<div align="center">
+	<div align="center" style="margin-bottom:5px;">
    	<c:choose>
 	    <c:when test="${empty login}">
 	        <input type="button" value="로그인" onclick="location.href='../login';">
+	        <input type="button" value="회원가입" onclick="location.href='../login/signupForm';">
 	    </c:when>	 
 	    <c:otherwise>
 	        <input type="button" value="로그아웃" onclick="location.href='../logout';">

@@ -15,9 +15,21 @@ public class MemberServiceImpl implements MemberService
     private MemberDAO dao;
 	
 	@Override
-	public MemberVO login(MemberVO vo) 
+	public MemberVO login(String id) 
 	{
-		return dao.login(vo);
+		return dao.login(id);
+	}
+
+	@Override
+	public void create(MemberVO vo)
+	{
+		dao.create(vo);
+	}
+
+	@Override
+	public int selectExistId(String id) 
+	{
+		return dao.selectExistId(id);
 	}
 
 }

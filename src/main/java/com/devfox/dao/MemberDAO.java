@@ -4,6 +4,9 @@ import com.devfox.domain.MemberVO;
 
 public interface MemberDAO 
 {
-	public MemberVO login(MemberVO vo);
+	public MemberVO login(String id);
 	
+	public void create(MemberVO vo);
+	
+	public int selectExistId(String id);
 }
