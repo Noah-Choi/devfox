@@ -28,7 +28,7 @@
 		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
              
 		<!-- XML Mapperを認識するように設定 -->
-		<property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"></property>
+		<property name="mapperLocations" value="classpath:/mapper/*Mapper.xml"></property>
 	</bean>
      
     <!-- SQLSessionTemplate設定 -->

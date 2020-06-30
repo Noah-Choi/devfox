@@ -68,7 +68,7 @@
 		</form>
 	
 		<br>	
-		<input type="button" value="글 목록" onclick="location.href='list';">
+		<input type="button" value="글 목록" onclick="location.href='/board/list';">
 	</div>
 	
 </body>
